@@ -1,5 +1,6 @@
 import SwiftUI
 import CoreData
+import UIKit
 
 struct AddFamilyMember: View {
 
@@ -17,9 +18,63 @@ struct AddFamilyMember: View {
     @State private var occupation: String = ""
 
     @State private var isAlert = false
+    
+    @State private var selectedImage: UIImage? = nil
+    
+    // Tracks when to present the image gallery overlay
+    @State private var showImagePicker = false
 
     var body: some View {
         Form {
+            Section {
+                VStack(spacing: 12) {
+                    
+                    Button(action: {
+                        showImagePicker = true
+                    }) {
+                        ZStack(alignment: .bottomTrailing) {
+                            Group {
+                                if let image = selectedImage {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFill()
+                                } else {
+                                    Image(systemName: "person.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .padding(30)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                            .frame(width: 120, height: 120)
+                            .background(Color(.systemGray6))
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle()
+                                    .stroke(Color("BrandBlue"), lineWidth: 2)
+                            )
+
+                            Circle()
+                                .fill(Color("BrandBlue"))
+                                .frame(width: 38, height: 38)
+                                .overlay(
+                                    Image(systemName: "camera.fill")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 16))
+                                )
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle()) // Cleaned button highlight type
+
+                    Text("Upload Photo")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+            }
+            .listRowBackground(Color.clear)
+            
             Section(
                 header:
                     Text("PERSONAL INFORMATION")
@@ -114,7 +169,6 @@ struct AddFamilyMember: View {
                         return
                     }
 
-                    // FIXED: Create a new Core Data object directly inside viewContext
                     let newMember = Member(context: viewContext)
                     newMember.name = name
                     newMember.age = age
@@ -123,7 +177,13 @@ struct AddFamilyMember: View {
                     newMember.address = address.isEmpty ? "None" : address
                     newMember.occupation = occupation.isEmpty ? "None" : occupation
                     newMember.birthday = birthday
-                    newMember.image = "person.circle.fill"
+                    
+                    // Convert chosen UIImage to binary data format for Core Data saving
+                    if let uiImage = selectedImage {
+                        newMember.image = uiImage.jpegData(compressionQuality: 0.7)
+                    } else {
+                        newMember.image = nil
+                    }
 
                     // Save changes to database
                     do {
@@ -159,6 +219,10 @@ struct AddFamilyMember: View {
         }
         .background(Color(.systemGroupedBackground))
         .navigationTitle("Add Member")
+        // Present image view sheet wrapper overlay layout
+        .sheet(isPresented: $showImagePicker) {
+            ImagePicker(selectedImage: $selectedImage)
+        }
         .alert(isPresented: $isAlert) {
             Alert(
                 title: Text("Missing Information"),
@@ -169,7 +233,6 @@ struct AddFamilyMember: View {
     }
 }
 
-// FIXED: Cleaned preview to load temporary in-memory environment context
 struct AddFamilyMember_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.shared.container.viewContext
@@ -179,4 +242,3 @@ struct AddFamilyMember_Previews: PreviewProvider {
         }
     }
 }
-

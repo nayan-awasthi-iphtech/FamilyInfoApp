@@ -1,21 +1,12 @@
-//
-//  MemberRowView.swift
-//  FamilyInformation
-//
-//  Created by iPHTech4 on 7/8/26.
-//
-
 import SwiftUI
 
 struct MemberRowView: View {
     let member: Member
 
     var body: some View {
-
         HStack(spacing: 18) {
 
             ZStack {
-
                 Circle()
                     .fill(
                         LinearGradient(
@@ -29,11 +20,20 @@ struct MemberRowView: View {
                     )
                     .frame(width: 70, height: 70)
 
-                Image(systemName: member.image ?? "person.circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 35, height: 35)
-                    .foregroundColor(Color("BrandBlue"))
+                // FIXED: Check if valid binary data exists, otherwise fallback to an SF Symbol icon
+                if let imageData = member.image, let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill() // Ensures custom user photos don't stretch
+                        .frame(width: 70, height: 70) // Match the circle bounds
+                        .clipShape(Circle())
+                } else {
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35, height: 35)
+                        .foregroundColor(Color("BrandBlue"))
+                }
             }
 
             VStack(alignment: .leading, spacing: 6) {
@@ -43,7 +43,6 @@ struct MemberRowView: View {
                     .foregroundColor(.primary)
 
                 HStack(spacing: 6) {
-
                     Image(systemName: "person.2.fill")
                         .font(.caption)
                         .foregroundColor(Color("BrandBlue"))
@@ -54,7 +53,6 @@ struct MemberRowView: View {
                 }
 
                 HStack(spacing: 6) {
-
                     Image(systemName: "briefcase.fill")
                         .font(.caption)
                         .foregroundColor(.orange)
@@ -93,4 +91,3 @@ struct MemberRowView_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
-

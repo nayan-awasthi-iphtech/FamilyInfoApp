@@ -10,7 +10,7 @@ import CoreData
 
 struct ContentView: View {
     
-    @State private var searchText = "hi"
+    @State private var searchText = ""
     
     @Environment (\.managedObjectContext) private var viewContext
     
@@ -20,16 +20,6 @@ struct ContentView: View {
     )
 
     private var members:FetchedResults<Member>
-    
-    var filteredMembers: [Member]{
-        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty{
-            return Array(members)
-        }
-        
-        return members.filter{
-            ($0.name ?? "").localizedCaseInsensitiveContains(searchText)
-        }
-    }
     
     var body: some View {
         NavigationView {
@@ -90,5 +80,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
 }

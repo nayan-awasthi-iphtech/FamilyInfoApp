@@ -1,10 +1,3 @@
-//
-//  PersistenceController.swift
-//  FamilyInformation
-//
-//  Created by iPHTech4 on 7/9/26.
-//
-
 import Foundation
 import CoreData
 

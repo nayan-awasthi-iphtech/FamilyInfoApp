@@ -9,7 +9,6 @@ struct BirthdayCardView: View {
         if birthdayMembers.isEmpty {
 
             VStack(spacing: 15) {
-
                 Image(systemName: "gift.fill")
                     .font(.system(size: 35))
                     .foregroundColor(Color("Birthday"))
@@ -37,12 +36,10 @@ struct BirthdayCardView: View {
             VStack(alignment: .leading, spacing: 18) {
 
                 HStack {
-
                     Image(systemName: "gift.fill")
                         .font(.title2)
 
                     VStack(alignment: .leading, spacing: 2) {
-
                         Text("Today's Birthday")
                             .font(.headline)
 
@@ -60,22 +57,27 @@ struct BirthdayCardView: View {
                     HStack(spacing: 15) {
 
                         ZStack {
-
                             Circle()
                                 .fill(Color.white.opacity(0.2))
                                 .frame(width: 60, height: 60)
 
-                            // ✅ FIXED: Safely unwrapped optional core data string
-                            Image(systemName: member.image ?? "person.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.white)
+                            // FIXED: Check if valid binary data exists, otherwise use fallback icon
+                            if let imageData = member.image, let uiImage = UIImage(data: imageData) {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 60, height: 60) // Match card shape bounds
+                                    .clipShape(Circle())
+                            } else {
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(.white)
+                            }
                         }
 
                         VStack(alignment: .leading, spacing: 5) {
-
-                            // ✅ FIXED: Safely unwrapped optional core data name
                             Text(member.name ?? "Unknown")
                                 .font(.headline)
                                 .foregroundColor(.white)
@@ -120,7 +122,6 @@ struct BirthdayCardView: View {
     }
 }
 
-// ✅ FIXED: Preview converted to match clean scratch entity structure
 struct BirthdayCardView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.shared.container.viewContext
@@ -130,5 +131,3 @@ struct BirthdayCardView_Previews: PreviewProvider {
             .environment(\.managedObjectContext, context)
     }
 }
-
-

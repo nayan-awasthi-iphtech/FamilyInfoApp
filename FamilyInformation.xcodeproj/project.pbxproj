@@ -21,8 +21,8 @@
 		188203D82FFE59C800E84182 /* EditMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188203D72FFE59C800E84182 /* EditMemberView.swift */; };
 		18894B032FFE1103009F7909 /* ShowFamilyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18894B022FFE1103009F7909 /* ShowFamilyDetails.swift */; };
 		18894B062FFE189C009F7909 /* MemberInfoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18894B052FFE189C009F7909 /* MemberInfoCard.swift */; };
-		18A3DF722FFD156E004F5C70 /* FamilyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3DF712FFD156E004F5C70 /* FamilyData.swift */; };
 		18A3DF762FFD16E4004F5C70 /* AddFamilyMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3DF752FFD16E4004F5C70 /* AddFamilyMember.swift */; };
+		18E340243000B64F001A7EED /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E340233000B64F001A7EED /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,8 +42,8 @@
 		188203D72FFE59C800E84182 /* EditMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberView.swift; sourceTree = "<group>"; };
 		18894B022FFE1103009F7909 /* ShowFamilyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFamilyDetails.swift; sourceTree = "<group>"; };
 		18894B052FFE189C009F7909 /* MemberInfoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoCard.swift; sourceTree = "<group>"; };
-		18A3DF712FFD156E004F5C70 /* FamilyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyData.swift; sourceTree = "<group>"; };
 		18A3DF752FFD16E4004F5C70 /* AddFamilyMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFamilyMember.swift; sourceTree = "<group>"; };
+		18E340233000B64F001A7EED /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +83,6 @@
 				181B45E42FFD0A4100EEE730 /* Assets.xcassets */,
 				181B45E92FFD0A4100EEE730 /* Info.plist */,
 				181B45E62FFD0A4100EEE730 /* Preview Content */,
-				18A3DF712FFD156E004F5C70 /* FamilyData.swift */,
 				18A3DF752FFD16E4004F5C70 /* AddFamilyMember.swift */,
 				18894B022FFE1103009F7909 /* ShowFamilyDetails.swift */,
 				18894B052FFE189C009F7909 /* MemberInfoCard.swift */,
@@ -117,6 +116,7 @@
 				188203D12FFE33C400E84182 /* MemberRowView.swift */,
 				188203D42FFE35AA00E84182 /* MemberListView.swift */,
 				188203D72FFE59C800E84182 /* EditMemberView.swift */,
+				18E340233000B64F001A7EED /* ImagePicker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -193,6 +193,7 @@
 				188203D82FFE59C800E84182 /* EditMemberView.swift in Sources */,
 				187C8C8B2FFF6F6900327B87 /* PersistenceController.swift in Sources */,
 				188203C82FFE2EF800E84182 /* SearchBar.swift in Sources */,
+				18E340243000B64F001A7EED /* ImagePicker.swift in Sources */,
 				18894B032FFE1103009F7909 /* ShowFamilyDetails.swift in Sources */,
 				188203CF2FFE312B00E84182 /* MemberHelper.swift in Sources */,
 				181B45E32FFD0A3D00EEE730 /* ContentView.swift in Sources */,
@@ -201,7 +202,6 @@
 				18894B062FFE189C009F7909 /* MemberInfoCard.swift in Sources */,
 				188203D52FFE35AA00E84182 /* MemberListView.swift in Sources */,
 				188203CC2FFE303B00E84182 /* BirthdayCardView.swift in Sources */,
-				18A3DF722FFD156E004F5C70 /* FamilyData.swift in Sources */,
 				18A3DF762FFD16E4004F5C70 /* AddFamilyMember.swift in Sources */,
 				188203D22FFE33C400E84182 /* MemberRowView.swift in Sources */,
 			);

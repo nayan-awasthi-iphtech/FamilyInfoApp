@@ -15,7 +15,7 @@ struct MemberDetailView: View {
 
     private let formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .long
+        formatter.dateStyle = .long // FIXED: Corrected typo from letStyle to formatter.dateStyle
         formatter.timeStyle = .none
         return formatter
     }()
@@ -38,14 +38,24 @@ struct MemberDetailView: View {
                         .shadow(color: Color.blue.opacity(0.3), radius: 10)
 
                         VStack(spacing: 15) {
-                            Image(systemName: member.image ?? "person.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 90, height: 90)
-                                .foregroundColor(.blue)
-                                .padding(22)
-                                .background(Color.white)
-                                .clipShape(Circle())
+                            
+                            // FIXED: Added length check to stop corrupted buffer crashes
+                            Group {
+                                if let imageData = member.image, imageData.count > 0, let uiImage = UIImage(data: imageData) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .scaledToFill()
+                                } else {
+                                    Image(systemName: "person.circle.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundColor(.blue)
+                                        .padding(22)
+                                }
+                            }
+                            .frame(width: 134, height: 134)
+                            .background(Color.white)
+                            .clipShape(Circle())
 
                             Text(member.name ?? "Unknown Name")
                                 .font(.title2)
@@ -63,7 +73,7 @@ struct MemberDetailView: View {
                     }
                     .padding(.horizontal)
 
-                    // FIXED: Optional handling with explicit String casts for Xcode 12.4
+                    // FIXED: Restored 'tilte:' parameter label to match your custom MemberInfoCard implementation
                     VStack(spacing: 18) {
                         MemberInfoCard(
                             icon: "calendar",
@@ -113,7 +123,6 @@ struct MemberDetailView: View {
                 }
             }
         }
-        // FIXED: Cleaned closure block to prevent 'Generic parameter Content' inference error
         .alert(isPresented: $showDeleteAlert) {
             Alert(
                 title: Text("Delete Member"),
@@ -143,10 +152,7 @@ struct MemberDetailView: View {
 
 struct MemberDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        // Ek fresh temporary context banaya
         let context = PersistenceController.shared.container.viewContext
-
-        // Pure scratch se bina kisi initial data ke blank object banaya
         let blankMember = Member(context: context)
 
         return NavigationView {
@@ -155,5 +161,3 @@ struct MemberDetailView_Previews: PreviewProvider {
         }
     }
 }
-
-

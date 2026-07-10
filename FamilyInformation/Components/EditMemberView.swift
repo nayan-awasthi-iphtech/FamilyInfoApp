@@ -3,10 +3,16 @@ import CoreData
 
 struct EditMemberView: View {
 
-    // FIXED: Core Data handles changes via ObservedObject, not a strict local @Binding struct array
     @ObservedObject var member: Member
 
     @Environment(\.presentationMode) var presentationMode
+    
+    // Core Data environment viewContext to save structural changes
+    @Environment(\.managedObjectContext) private var viewContext
+
+    // Local UI state variables for editing the image
+    @State private var selectedImage: UIImage? = nil
+    @State private var showImagePicker = false
 
     var body: some View {
         NavigationView {
@@ -24,12 +30,61 @@ struct EditMemberView: View {
                 ScrollView {
                     VStack(spacing: 14) {
 
+                        // 0. Profile Photo Section
+                        VStack(spacing: 12) {
+                            Button(action: {
+                                showImagePicker = true
+                            }) {
+                                ZStack(alignment: .bottomTrailing) {
+                                    Group {
+                                        if let image = selectedImage {
+                                            Image(uiImage: image)
+                                                .resizable()
+                                                .scaledToFill()
+                                        } else if let imageData = member.image, let savedUiImage = UIImage(data: imageData) {
+                                            Image(uiImage: savedUiImage)
+                                                .resizable()
+                                                .scaledToFill()
+                                        } else {
+                                            Image(systemName: "person.fill")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .padding(30)
+                                                .foregroundColor(.gray)
+                                        }
+                                    }
+                                    .frame(width: 120, height: 120)
+                                    .background(Color(.systemGray6))
+                                    .clipShape(Circle())
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color("BrandBlue"), lineWidth: 2)
+                                    )
+
+                                    Circle()
+                                        .fill(Color("BrandBlue"))
+                                        .frame(width: 38, height: 38)
+                                        .overlay(
+                                            Image(systemName: "camera.fill")
+                                                .foregroundColor(.white)
+                                                .font(.system(size: 16))
+                                        )
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+
+                            Text("Change Photo")
+                                .font(.footnote)
+                                .foregroundColor(.gray)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+
                         // 1. Personal Information
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Personal Information")
                                 .font(.headline)
 
-                            // FIXED: Clean optional string bindings using custom extensions/inline wrappers
                             TextField("Name", text: Binding(
                                 get: { member.name ?? "" },
                                 set: { member.name = $0 }
@@ -144,15 +199,35 @@ struct EditMemberView: View {
                     else {
                         return
                     }
-                    presentationMode.wrappedValue.dismiss()
+                    
+                    // Convert chosen custom image to updated Binary Data values
+                    if let uiImage = selectedImage {
+                        member.image = uiImage.jpegData(compressionQuality: 0.7)
+                    }
+                    
+                    // Explicitly save the context modifications to the persistent container
+                    do {
+                        try viewContext.save()
+                        presentationMode.wrappedValue.dismiss()
+                    } catch {
+                        print("Failed to save edited context details: \(error.localizedDescription)")
+                    }
                 }
                 .foregroundColor(Color.blue)
             )
+            .sheet(isPresented: $showImagePicker) {
+                ImagePicker(selectedImage: $selectedImage)
+            }
+            // Populate the UI picker image buffer if binary asset exists on startup
+            .onAppear {
+                if let savedBinaryData = member.image {
+                    selectedImage = UIImage(data: savedBinaryData)
+                }
+            }
         }
     }
 }
 
-// FIXED: Removed the invalid .constant(...) wrapper call from the initialization chain
 struct EditMemberView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.shared.container.viewContext
