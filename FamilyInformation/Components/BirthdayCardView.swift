@@ -1,3 +1,10 @@
+//
+//  BirthdayCardView.swift
+//  FamilyInformation
+//
+//  Created by iPHTech4 on 7/10/26.
+//
+
 import SwiftUI
 import CoreData
 
@@ -7,7 +14,6 @@ struct BirthdayCardView: View {
 
     var body: some View {
         if birthdayMembers.isEmpty {
-
             VStack(spacing: 15) {
                 Image(systemName: "gift.fill")
                     .font(.system(size: 35))
@@ -32,9 +38,7 @@ struct BirthdayCardView: View {
             .padding(.horizontal)
 
         } else {
-
             VStack(alignment: .leading, spacing: 18) {
-
                 HStack {
                     Image(systemName: "gift.fill")
                         .font(.title2)
@@ -53,49 +57,8 @@ struct BirthdayCardView: View {
                 .foregroundColor(.white)
 
                 ForEach(birthdayMembers) { member in
-
-                    HStack(spacing: 15) {
-
-                        ZStack {
-                            Circle()
-                                .fill(Color.white.opacity(0.2))
-                                .frame(width: 60, height: 60)
-
-                            // FIXED: Check if valid binary data exists, otherwise use fallback icon
-                            if let imageData = member.image, let uiImage = UIImage(data: imageData) {
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 60, height: 60) // Match card shape bounds
-                                    .clipShape(Circle())
-                            } else {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(.white)
-                            }
-                        }
-
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(member.name ?? "Unknown")
-                                .font(.headline)
-                                .foregroundColor(.white)
-
-                            Text("🎉 Happy Birthday!")
-                                .font(.subheadline)
-                                .foregroundColor(Color.white.opacity(0.95))
-
-                            Text("Have a wonderful year ahead!")
-                                .font(.caption)
-                                .foregroundColor(Color.white.opacity(0.85))
-                        }
-
-                        Spacer()
-                    }
-                    .padding()
-                    .background(Color.white.opacity(0.12))
-                    .cornerRadius(15)
+                    // Instantly sync image view redrawing when edited
+                    BirthdayMemberRow(member: member)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -122,12 +85,60 @@ struct BirthdayCardView: View {
     }
 }
 
-struct BirthdayCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        let context = PersistenceController.shared.container.viewContext
-        let blankMember = Member(context: context)
+// Extracted Subview to perfectly catch individual member data edits live
+struct BirthdayMemberRow: View {
+    @ObservedObject var member: Member // Crucial for instant data stream binding updates
 
-        return BirthdayCardView(birthdayMembers: [blankMember])
-            .environment(\.managedObjectContext, context)
+    var body: some View {
+        HStack(spacing: 15) {
+            ZStack {
+                Circle()
+                    .fill(Color.white.opacity(0.2))
+                    .frame(width: 60, height: 60)
+
+                if let imageData = member.image, let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 60, height: 60)
+                        .clipShape(Circle())
+                } else {
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.white)
+                }
+            }
+
+            VStack(alignment: .leading, spacing: 5) {
+                Text(member.name ?? "Unknown")
+                    .font(.headline)
+                    .foregroundColor(.white)
+
+                Text("🎉 Happy Birthday!")
+                    .font(.subheadline)
+                    .foregroundColor(Color.white.opacity(0.95))
+
+                Text("Have a wonderful year ahead!")
+                    .font(.caption)
+                    .foregroundColor(Color.white.opacity(0.85))
+            }
+
+            Spacer()
+        }
+        .padding()
+        .background(Color.white.opacity(0.12))
+        .cornerRadius(15)
     }
+}
+
+// Updated modern swift preview syntax matching your context pipeline
+#Preview {
+    let context = PersistenceController.shared.container.viewContext
+    let sampleMember = Member(context: context)
+    sampleMember.name = "Rahul"
+    
+    return BirthdayCardView(birthdayMembers: [sampleMember])
+        .environment(\.managedObjectContext, context)
 }

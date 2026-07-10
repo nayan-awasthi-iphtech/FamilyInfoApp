@@ -11,71 +11,57 @@ import CoreData
 struct ContentView: View {
     
     @State private var searchText = ""
-    
-    @Environment (\.managedObjectContext) private var viewContext
+    @State private var isPresentingMemberScreen: Bool = false
+    @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Member.name, ascending: true)],
-        animation:.default
+        animation: .default
     )
-
-    private var members:FetchedResults<Member>
+    private var members: FetchedResults<Member>
     
     var body: some View {
-        NavigationView {
-            ZStack{
+        NavigationStack {
+            ZStack {
                 LinearGradient(
                     gradient: Gradient(colors: [
-                        Color("BrandBlue"),.white
+                        Color("BrandBlue"), .white
                     ]),
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
                 .ignoresSafeArea()
-            VStack(spacing:18){
-                HStack(alignment: .center){
-                VStack(alignment: .center,spacing: 4){
-                    Text("My Family")
-                        .font(.system(size: 30, weight: .bold))
-                    Text("❤️ \(members.count) Members")
-                        .font(.subheadline)
-                            
-                }
-                .padding(.horizontal)
-                Spacer()
-                    NavigationLink(destination:AddFamilyMember().environment(\.managedObjectContext, viewContext)){
-                    
-                    ZStack {
-
-                                Circle()
-                                    .fill(Color("BrandBlue"))
-                                    .frame(width: 50, height: 50)
-
-                                Image(systemName: "plus")
-                                    .font(.title3)
-                                    .padding()
-                            }
-                           .padding(.trailing,10)
+                
+                // FIXED: Pure content area ko ScrollView mein daala taaki dynamic layouts screen se bahar na bhaagein
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 18) {
+                        
+                        HomeHeaderView(memberCount: members.count) {
+                            isPresentingMemberScreen = true
                         }
+                        
+                        SearchBar(searchText: $searchText)
+                        
+                        BirthdayCardView(birthdayMembers: MemberHelper.todaysBirthdays(from: Array(members)))
+                            .padding(.bottom, 5)
+                        
+                        // Main List Area
+                        MemberListView(searchText: searchText)
+                            .environment(\.managedObjectContext, viewContext)
                     }
-                      .padding(.horizontal)
-                      .padding(.top,10)
-                
-                SearchBar(searchText: $searchText)
-                
-                BirthdayCardView(birthdayMembers: MemberHelper.todaysBirthdays(from: Array(members)))
-                    .padding(.bottom, 5)
-                
-                MemberListView(searchText: searchText)
-                    .environment(\.managedObjectContext, viewContext)
-            }
+                    .padding(.bottom, 20)
+                }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .navigationBarHidden(true)
                 .navigationBarTitleDisplayMode(.inline)
-                }
+            }
+            .navigationDestination(isPresented: $isPresentingMemberScreen) {
+                AddFamilyMember()
+                    .environment(\.managedObjectContext, viewContext)
             }
         }
     }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

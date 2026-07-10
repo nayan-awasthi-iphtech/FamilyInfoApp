@@ -1,21 +1,30 @@
+//
+//  EditMemberView.swift
+//  FamilyInformation
+//
+//  Created by iPHTech4 on 7/10/26.
+//
+
 import SwiftUI
 import CoreData
+import PhotosUI // 1. Apple ki modern library import kari
 
 struct EditMemberView: View {
 
     @ObservedObject var member: Member
 
-    @Environment(\.presentationMode) var presentationMode
+    // Modern dismiss environment tool instead of presentationMode
+    @Environment(\.dismiss) private var dismiss
     
     // Core Data environment viewContext to save structural changes
     @Environment(\.managedObjectContext) private var viewContext
 
-    // Local UI state variables for editing the image
+    // Local UI state variables for editing the image seamlessly via PhotosUI
+    @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImage: UIImage? = nil
-    @State private var showImagePicker = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack { // Modern alternative to legacy NavigationView
             ZStack {
                 LinearGradient(
                     gradient: Gradient(colors: [
@@ -30,19 +39,13 @@ struct EditMemberView: View {
                 ScrollView {
                     VStack(spacing: 14) {
 
-                        // 0. Profile Photo Section
+                        // 0. Profile Photo Section using PhotosPicker
                         VStack(spacing: 12) {
-                            Button(action: {
-                                showImagePicker = true
-                            }) {
+                            PhotosPicker(selection: $selectedItem, matching: .images) {
                                 ZStack(alignment: .bottomTrailing) {
                                     Group {
                                         if let image = selectedImage {
                                             Image(uiImage: image)
-                                                .resizable()
-                                                .scaledToFill()
-                                        } else if let imageData = member.image, let savedUiImage = UIImage(data: imageData) {
-                                            Image(uiImage: savedUiImage)
                                                 .resizable()
                                                 .scaledToFill()
                                         } else {
@@ -187,38 +190,48 @@ struct EditMemberView: View {
             }
             .navigationTitle("Edit Member")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading: Button("Cancel") {
-                    presentationMode.wrappedValue.dismiss()
-                },
-                trailing: Button("Save") {
-                    guard let name = member.name, !name.isEmpty,
-                          member.age > 0,
-                          let rel = member.relationship, !rel.isEmpty,
-                          let phone = member.phone, !phone.isEmpty
-                    else {
-                        return
-                    }
-                    
-                    // Convert chosen custom image to updated Binary Data values
-                    if let uiImage = selectedImage {
-                        member.image = uiImage.jpegData(compressionQuality: 0.7)
-                    }
-                    
-                    // Explicitly save the context modifications to the persistent container
-                    do {
-                        try viewContext.save()
-                        presentationMode.wrappedValue.dismiss()
-                    } catch {
-                        print("Failed to save edited context details: \(error.localizedDescription)")
+            .toolbar { // Modern toolbar syntax instead of navigationBarItems
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
                     }
                 }
-                .foregroundColor(Color.blue)
-            )
-            .sheet(isPresented: $showImagePicker) {
-                ImagePicker(selectedImage: $selectedImage)
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        guard let name = member.name, !name.isEmpty,
+                              member.age > 0,
+                              let rel = member.relationship, !rel.isEmpty,
+                              let phone = member.phone, !phone.isEmpty
+                        else {
+                            return
+                        }
+                        
+                        // Convert chosen custom image back to CoreData binary block stream
+                        if let uiImage = selectedImage {
+                            member.image = uiImage.jpegData(compressionQuality: 0.7)
+                        }
+                        
+                        do {
+                            try viewContext.save()
+                            dismiss()
+                        } catch {
+                            print("Failed to save edited context details: \(error.localizedDescription)")
+                        }
+                    }
+                    .foregroundColor(Color.blue)
+                }
             }
-            // Populate the UI picker image buffer if binary asset exists on startup
+            // Listen to modern photo selection changes reactively
+            .onChange(of: selectedItem) { _, newItem in
+                Task {
+                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                        if let uiImage = UIImage(data: data) {
+                            selectedImage = uiImage
+                        }
+                    }
+                }
+            }
+            // Populate image buffer reactively if database record is present on load
             .onAppear {
                 if let savedBinaryData = member.image {
                     selectedImage = UIImage(data: savedBinaryData)
@@ -228,12 +241,11 @@ struct EditMemberView: View {
     }
 }
 
-struct EditMemberView_Previews: PreviewProvider {
-    static var previews: some View {
-        let context = PersistenceController.shared.container.viewContext
-        let blankMember = Member(context: context)
-        
-        return EditMemberView(member: blankMember)
-            .environment(\.managedObjectContext, context)
-    }
+// Updated modern swift preview macro architecture
+#Preview {
+    let context = PersistenceController.shared.container.viewContext
+    let blankMember = Member(context: context)
+    
+    return EditMemberView(member: blankMember)
+        .environment(\.managedObjectContext, context)
 }

@@ -1,7 +1,15 @@
+//
+//  MemberRowView.swift
+//  FamilyInformation
+//
+//  Created by iPHTech4 on 7/10/26.
+//
+
 import SwiftUI
 
 struct MemberRowView: View {
-    let member: Member
+    // Crucial for instant data stream binding updates when editing images
+    @ObservedObject var member: Member
 
     var body: some View {
         HStack(spacing: 18) {
@@ -38,7 +46,7 @@ struct MemberRowView: View {
 
             VStack(alignment: .leading, spacing: 6) {
 
-                Text(member.name ?? "unknown Name")
+                Text(member.name ?? "Unknown Name")
                     .font(.headline)
                     .foregroundColor(.primary)
 
@@ -47,7 +55,7 @@ struct MemberRowView: View {
                         .font(.caption)
                         .foregroundColor(Color("BrandBlue"))
 
-                    Text(member.relationship ?? "unkown relationship")
+                    Text(member.relationship ?? "Unknown Relationship")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -57,7 +65,7 @@ struct MemberRowView: View {
                         .font(.caption)
                         .foregroundColor(.orange)
 
-                    Text(member.occupation ?? "unkown occupation")
+                    Text(member.occupation ?? "Unknown Occupation")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -82,12 +90,13 @@ struct MemberRowView: View {
     }
 }
 
-struct MemberRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        let context = PersistenceController.shared.container.viewContext
-        let blankMember = Member(context: context)
-
-        return MemberRowView(member: blankMember)
-            .previewLayout(.sizeThatFits)
-    }
+// Updated modern swift preview syntax matching your context pipeline
+#Preview {
+    let context = PersistenceController.shared.container.viewContext
+    let sampleMember = Member(context: context)
+    sampleMember.name = "Rahul Sharma"
+    sampleMember.relationship = "Brother"
+    sampleMember.occupation = "Engineer"
+    
+    return MemberRowView(member: sampleMember)
 }

@@ -1,14 +1,20 @@
+//
+//  AddFamilyMember.swift
+//  FamilyInformation
+//
+//  Created by iPHTech4 on 7/10/26.
+//
+
 import SwiftUI
 import CoreData
-import UIKit
+import PhotosUI
 
 struct AddFamilyMember: View {
 
-    // Core Data viewContext for saving new entities
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
 
-    // State variables for capturing form data individually
+    // Input States
     @State private var name: String = ""
     @State private var ageInput: String = ""
     @State private var relationship: String = ""
@@ -19,195 +25,32 @@ struct AddFamilyMember: View {
 
     @State private var isAlert = false
     
+    @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImage: UIImage? = nil
-    
-    // Tracks when to present the image gallery overlay
-    @State private var showImagePicker = false
 
     var body: some View {
         Form {
+            // 1. Photo Picker Component
             Section {
-                VStack(spacing: 12) {
-                    
-                    Button(action: {
-                        showImagePicker = true
-                    }) {
-                        ZStack(alignment: .bottomTrailing) {
-                            Group {
-                                if let image = selectedImage {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFill()
-                                } else {
-                                    Image(systemName: "person.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .padding(30)
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                            .frame(width: 120, height: 120)
-                            .background(Color(.systemGray6))
-                            .clipShape(Circle())
-                            .overlay(
-                                Circle()
-                                    .stroke(Color("BrandBlue"), lineWidth: 2)
-                            )
-
-                            Circle()
-                                .fill(Color("BrandBlue"))
-                                .frame(width: 38, height: 38)
-                                .overlay(
-                                    Image(systemName: "camera.fill")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 16))
-                                )
-                        }
-                    }
-                    .buttonStyle(PlainButtonStyle()) // Cleaned button highlight type
-
-                    Text("Upload Photo")
-                        .font(.footnote)
-                        .foregroundColor(.gray)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
+                ProfileImagePickerView(selectedItem: $selectedItem, selectedImage: $selectedImage)
             }
             .listRowBackground(Color.clear)
             
-            Section(
-                header:
-                    Text("PERSONAL INFORMATION")
-                    .font(.caption)
-                    .foregroundColor(Color("BrandBlue"))
-            ) {
-                HStack {
-                    Image(systemName: "person.fill")
-                        .foregroundColor(Color("BrandBlue"))
+            // 2. Extracted Input Fields Component
+            MemberInputFieldsView(
+                name: $name,
+                ageInput: $ageInput,
+                relationship: $relationship,
+                phone: $phone,
+                address: $address,
+                birthday: $birthday,
+                occupation: $occupation
+            )
 
-                    TextField("Name", text: $name)
-                }
-
-                HStack {
-                    Image(systemName: "calendar")
-                        .foregroundColor(Color("BrandBlue"))
-
-                    TextField("Age", text: $ageInput)
-                        .keyboardType(.numberPad)
-                }
-
-                HStack {
-                    Image(systemName: "person.2.fill")
-                        .foregroundColor(Color("BrandBlue"))
-
-                    TextField("Relationship", text: $relationship)
-                }
-            }
-
-            Section(
-                header:
-                    Text("CONTACT")
-                    .font(.caption)
-                    .foregroundColor(Color("BrandBlue"))
-            ) {
-                HStack {
-                    Image(systemName: "phone.fill")
-                        .foregroundColor(Color("BrandBlue"))
-
-                    TextField("Contact", text: $phone)
-                }
-
-                HStack {
-                    Image(systemName: "location.fill")
-                        .foregroundColor(Color("BrandBlue"))
-
-                    TextField("Address", text: $address)
-                }
-            }
-
-            Section(
-                header:
-                    Text("PROFESSIONAL")
-                    .font(.caption)
-                    .foregroundColor(Color("BrandBlue"))
-            ) {
-                HStack {
-                    Image(systemName: "briefcase.fill")
-                        .foregroundColor(Color("BrandBlue"))
-
-                    TextField("Occupation", text: $occupation)
-                }
-            }
-
-            Section(
-                header:
-                    Text("BIRTHDAY")
-                    .font(.caption)
-                    .foregroundColor(Color("BrandBlue"))
-            ) {
-                HStack {
-                    Image(systemName: "gift.fill")
-                        .foregroundColor(Color("BrandBlue"))
-
-                    DatePicker(
-                        "Birthday",
-                        selection: $birthday,
-                        displayedComponents: .date
-                    )
-                }
-            }
-
+            // 3. Extracted Save Button Component with validation action closure
             Section {
-                Button(action: {
-                    guard !name.isEmpty,
-                          let age = Int16(ageInput),
-                          age > 0,
-                          !relationship.isEmpty,
-                          !phone.isEmpty
-                    else {
-                        isAlert = true
-                        return
-                    }
-
-                    let newMember = Member(context: viewContext)
-                    newMember.name = name
-                    newMember.age = age
-                    newMember.relationship = relationship
-                    newMember.phone = phone
-                    newMember.address = address.isEmpty ? "None" : address
-                    newMember.occupation = occupation.isEmpty ? "None" : occupation
-                    newMember.birthday = birthday
-                    
-                    // Convert chosen UIImage to binary data format for Core Data saving
-                    if let uiImage = selectedImage {
-                        newMember.image = uiImage.jpegData(compressionQuality: 0.7)
-                    } else {
-                        newMember.image = nil
-                    }
-
-                    // Save changes to database
-                    do {
-                        try viewContext.save()
-                        self.presentationMode.wrappedValue.dismiss()
-                    } catch {
-                        print("Failed to save new member: \(error.localizedDescription)")
-                    }
-
-                }) {
-                    HStack {
-                        Spacer()
-
-                        Image(systemName: "checkmark.circle.fill")
-
-                        Text("Save Member")
-                            .fontWeight(.semibold)
-
-                        Spacer()
-                    }
-                    .padding()
-                    .background(Color("BrandBlue"))
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
+                SaveMemberButton {
+                    validateAndSaveMember()
                 }
             }
 
@@ -219,26 +62,56 @@ struct AddFamilyMember: View {
         }
         .background(Color(.systemGroupedBackground))
         .navigationTitle("Add Member")
-        // Present image view sheet wrapper overlay layout
-        .sheet(isPresented: $showImagePicker) {
-            ImagePicker(selectedImage: $selectedImage)
+        .alert("Missing Information", isPresented: $isAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("Please make sure Name, Age, Relationship, and Contact fields are filled out correctly.")
         }
-        .alert(isPresented: $isAlert) {
-            Alert(
-                title: Text("Missing Information"),
-                message: Text("Please make sure Name, Age, Relationship, and Contact fields are filled out correctly."),
-                dismissButton: .default(Text("OK"))
-            )
+    }
+
+    // Isolated Core Data saving action handler
+    private func validateAndSaveMember() {
+        guard !name.isEmpty,
+              let age = Int16(ageInput),
+              age > 0,
+              !relationship.isEmpty,
+              !phone.isEmpty
+        else {
+            isAlert = true
+            return
+        }
+
+        let newMember = Member(context: viewContext)
+        
+        // CRITICAL FIX: Har naye member ko ek unique ID dena compulsory hai!
+        newMember.id = UUID()
+        
+        newMember.name = name
+        newMember.age = age
+        newMember.relationship = relationship
+        newMember.phone = phone
+        newMember.address = address.isEmpty ? "None" : address
+        newMember.occupation = occupation.isEmpty ? "None" : occupation
+        newMember.birthday = birthday
+        
+        if let uiImage = selectedImage {
+            newMember.image = uiImage.jpegData(compressionQuality: 0.7)
+        } else {
+            newMember.image = nil
+        }
+
+        do {
+            try viewContext.save()
+            dismiss()
+        } catch {
+            print("Failed to save new member: \(error.localizedDescription)")
         }
     }
 }
 
-struct AddFamilyMember_Previews: PreviewProvider {
-    static var previews: some View {
-        let context = PersistenceController.shared.container.viewContext
-        return NavigationView {
-            AddFamilyMember()
-                .environment(\.managedObjectContext, context)
-        }
+#Preview {
+    NavigationStack {
+        AddFamilyMember()
+            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
     }
 }

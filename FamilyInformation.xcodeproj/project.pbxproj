@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B25D0BD3000FA40006C8D61 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B25D0BC3000FA40006C8D61 /* HeaderView.swift */; };
+		0B25D0BF30010264006C8D61 /* MemberHeaderCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B25D0BE30010264006C8D61 /* MemberHeaderCardView.swift */; };
+		0B25D0C1300102A9006C8D61 /* MemberInfoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B25D0C0300102A9006C8D61 /* MemberInfoListView.swift */; };
+		0B25D0C33001038B006C8D61 /* ProfileImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B25D0C23001038B006C8D61 /* ProfileImagePickerView.swift */; };
+		0B25D0C53001049F006C8D61 /* MemberInputFieldsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B25D0C43001049F006C8D61 /* MemberInputFieldsView.swift */; };
+		0B25D0C7300104D8006C8D61 /* SaveMemberButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B25D0C6300104D8006C8D61 /* SaveMemberButton.swift */; };
 		181B45E12FFD0A3D00EEE730 /* FamilyInformationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181B45E02FFD0A3D00EEE730 /* FamilyInformationApp.swift */; };
 		181B45E32FFD0A3D00EEE730 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181B45E22FFD0A3D00EEE730 /* ContentView.swift */; };
 		181B45E52FFD0A4100EEE730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 181B45E42FFD0A4100EEE730 /* Assets.xcassets */; };
@@ -22,10 +28,15 @@
 		18894B032FFE1103009F7909 /* ShowFamilyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18894B022FFE1103009F7909 /* ShowFamilyDetails.swift */; };
 		18894B062FFE189C009F7909 /* MemberInfoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18894B052FFE189C009F7909 /* MemberInfoCard.swift */; };
 		18A3DF762FFD16E4004F5C70 /* AddFamilyMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3DF752FFD16E4004F5C70 /* AddFamilyMember.swift */; };
-		18E340243000B64F001A7EED /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E340233000B64F001A7EED /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B25D0BC3000FA40006C8D61 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		0B25D0BE30010264006C8D61 /* MemberHeaderCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberHeaderCardView.swift; sourceTree = "<group>"; };
+		0B25D0C0300102A9006C8D61 /* MemberInfoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoListView.swift; sourceTree = "<group>"; };
+		0B25D0C23001038B006C8D61 /* ProfileImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImagePickerView.swift; sourceTree = "<group>"; };
+		0B25D0C43001049F006C8D61 /* MemberInputFieldsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInputFieldsView.swift; sourceTree = "<group>"; };
+		0B25D0C6300104D8006C8D61 /* SaveMemberButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMemberButton.swift; sourceTree = "<group>"; };
 		181B45DD2FFD0A3D00EEE730 /* FamilyInformation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FamilyInformation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		181B45E02FFD0A3D00EEE730 /* FamilyInformationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyInformationApp.swift; sourceTree = "<group>"; };
 		181B45E22FFD0A3D00EEE730 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -43,7 +54,6 @@
 		18894B022FFE1103009F7909 /* ShowFamilyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFamilyDetails.swift; sourceTree = "<group>"; };
 		18894B052FFE189C009F7909 /* MemberInfoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoCard.swift; sourceTree = "<group>"; };
 		18A3DF752FFD16E4004F5C70 /* AddFamilyMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFamilyMember.swift; sourceTree = "<group>"; };
-		18E340233000B64F001A7EED /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +126,12 @@
 				188203D12FFE33C400E84182 /* MemberRowView.swift */,
 				188203D42FFE35AA00E84182 /* MemberListView.swift */,
 				188203D72FFE59C800E84182 /* EditMemberView.swift */,
-				18E340233000B64F001A7EED /* ImagePicker.swift */,
+				0B25D0BC3000FA40006C8D61 /* HeaderView.swift */,
+				0B25D0BE30010264006C8D61 /* MemberHeaderCardView.swift */,
+				0B25D0C0300102A9006C8D61 /* MemberInfoListView.swift */,
+				0B25D0C23001038B006C8D61 /* ProfileImagePickerView.swift */,
+				0B25D0C43001049F006C8D61 /* MemberInputFieldsView.swift */,
+				0B25D0C6300104D8006C8D61 /* SaveMemberButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -190,19 +205,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B25D0C33001038B006C8D61 /* ProfileImagePickerView.swift in Sources */,
+				0B25D0BF30010264006C8D61 /* MemberHeaderCardView.swift in Sources */,
 				188203D82FFE59C800E84182 /* EditMemberView.swift in Sources */,
 				187C8C8B2FFF6F6900327B87 /* PersistenceController.swift in Sources */,
 				188203C82FFE2EF800E84182 /* SearchBar.swift in Sources */,
-				18E340243000B64F001A7EED /* ImagePicker.swift in Sources */,
 				18894B032FFE1103009F7909 /* ShowFamilyDetails.swift in Sources */,
 				188203CF2FFE312B00E84182 /* MemberHelper.swift in Sources */,
 				181B45E32FFD0A3D00EEE730 /* ContentView.swift in Sources */,
+				0B25D0BD3000FA40006C8D61 /* HeaderView.swift in Sources */,
 				187C8C872FFF6B5E00327B87 /* FamilyModel.xcdatamodeld in Sources */,
 				181B45E12FFD0A3D00EEE730 /* FamilyInformationApp.swift in Sources */,
 				18894B062FFE189C009F7909 /* MemberInfoCard.swift in Sources */,
 				188203D52FFE35AA00E84182 /* MemberListView.swift in Sources */,
 				188203CC2FFE303B00E84182 /* BirthdayCardView.swift in Sources */,
+				0B25D0C53001049F006C8D61 /* MemberInputFieldsView.swift in Sources */,
 				18A3DF762FFD16E4004F5C70 /* AddFamilyMember.swift in Sources */,
+				0B25D0C7300104D8006C8D61 /* SaveMemberButton.swift in Sources */,
+				0B25D0C1300102A9006C8D61 /* MemberInfoListView.swift in Sources */,
 				188203D22FFE33C400E84182 /* MemberRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,7 +355,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"FamilyInformation/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FamilyInformation/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -356,7 +376,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"FamilyInformation/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FamilyInformation/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
