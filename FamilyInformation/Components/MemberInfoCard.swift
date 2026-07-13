@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MemberInfoCard: View {
     let icon: String
-    let tilte: String
+    let title: String
     let value: String
     
     var body: some View {
@@ -38,7 +38,7 @@ struct MemberInfoCard: View {
 
             VStack(alignment: .leading, spacing: 6) {
 
-                Text(tilte.uppercased())
+                Text(title.uppercased())
                     .font(.caption)
                     .fontWeight(.semibold)
                     .foregroundColor(.gray)
@@ -65,6 +65,6 @@ struct MemberInfoCard: View {
 
 struct MemberInfoCard_Previews: PreviewProvider {
     static var previews: some View {
-        MemberInfoCard(icon: "phone.fill", tilte: "Phone", value: "45456465")
+        MemberInfoCard(icon: "phone.fill", title: "Phone", value: "45456465")
     }
 }

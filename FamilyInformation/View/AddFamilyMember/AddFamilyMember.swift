@@ -102,6 +102,11 @@ struct AddFamilyMember: View {
 
         do {
             try viewContext.save()
+            
+            NotificationManager.shared.sheduleBirthdayNotification(for: newMember)
+            
+            NotificationManager.shared.scheduleTestNotification(secondsFromNow: 10)
+            
             dismiss()
         } catch {
             print("Failed to save new member: \(error.localizedDescription)")

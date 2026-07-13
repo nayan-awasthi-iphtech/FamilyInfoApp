@@ -3,7 +3,7 @@
 //  FamilyInformation
 //
 //  Created by iPHTech4 on 7/7/26.
-//
+
 
 import SwiftUI
 
@@ -14,9 +14,14 @@ struct FamilyInformationApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext,
-                             persistenceController.container.viewContext)
+            MainTabView()
+            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            
+            .onAppear{
+                NotificationManager.shared.requestAuthorization()
+            }
         }
     }
 }
+
+

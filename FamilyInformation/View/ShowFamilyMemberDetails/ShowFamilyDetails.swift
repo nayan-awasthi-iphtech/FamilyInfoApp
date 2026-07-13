@@ -40,6 +40,20 @@ struct MemberDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
+                //Favorite button
+                Button(action: {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)){
+                        member.isFavorite.toggle()
+                    }
+                    do{
+                        try viewContext.save()
+                    } catch {
+                        print("Failed to update favorite status: \(error.localizedDescription)")
+                    }
+                }) {
+                    Image(systemName: member.isFavorite ? "star.fill" : "star")
+                        .foregroundColor(member.isFavorite ? .yellow : .gray)
+                }
                 Button(action: { showEditSheet = true }) {
                     Image(systemName: "square.and.pencil")
                 }
@@ -76,7 +90,6 @@ struct MemberDetailView: View {
     }
 }
 
-// Xcode 26 Dynamic Macro Preview
 #Preview {
     let context = PersistenceController.shared.container.viewContext
     let blankMember = Member(context: context)

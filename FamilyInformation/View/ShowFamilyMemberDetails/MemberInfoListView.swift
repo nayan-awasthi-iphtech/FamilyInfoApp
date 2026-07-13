@@ -21,31 +21,31 @@ struct MemberInfoListView: View {
         VStack(spacing: 18) {
             MemberInfoCard(
                 icon: "calendar",
-                tilte: "Birthday",
+                title: "Birthday",
                 value: member.birthday != nil ? formatter.string(from: member.birthday!) : "Not Provided"
             )
 
             MemberInfoCard(
                 icon: "person.fill",
-                tilte: "Age",
+                title: "Age",
                 value: "\(member.age) Years"
             )
 
             MemberInfoCard(
                 icon: "briefcase.fill",
-                tilte: "Occupation",
+                title: "Occupation",
                 value: member.occupation ?? "None"
             )
 
             MemberInfoCard(
                 icon: "phone.fill",
-                tilte: "Phone",
+                title: "Phone",
                 value: member.phone ?? "None"
             )
 
             MemberInfoCard(
                 icon: "location.fill",
-                tilte: "Address",
+                title: "Address",
                 value: member.address ?? "None"
             )
         }
