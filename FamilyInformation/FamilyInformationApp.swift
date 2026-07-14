@@ -9,19 +9,21 @@ import SwiftUI
 
 @main
 struct FamilyInformationApp: App {
-    
     let persistenceController = PersistenceController.shared
+    
+    // Root level source of truth initialization
+    @StateObject private var appState = AppState.shared
     
     var body: some Scene {
         WindowGroup {
             MainTabView()
-            .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            
-            .onAppear{
-                NotificationManager.shared.requestAuthorization()
-            }
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                // Injected globally into the app environment stack
+                .environmentObject(appState)
+                .preferredColorScheme(appState.isDarkMode ? .dark : .light)
+                .onAppear {
+                    NotificationManager.shared.requestAuthorization()
+                }
         }
     }
 }
-
-

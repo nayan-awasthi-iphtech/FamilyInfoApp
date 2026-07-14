@@ -1,14 +1,109 @@
+////
+////  ProfileInfoSection.swift
+////  FamilyInformation
+////
+////  Created by iPHTech 30 on 13/07/26.
+////
 //
-//  ProfileInfoSection.swift
-//  FamilyInformation
+//import SwiftUI
 //
-//  Created by iPHTech 30 on 13/07/26.
+//struct PersonalInfoSection: View {
+//    @ObservedObject var member: Member
+//    
+//    var body: some View {
+//        FormSectionCard(title: "Personal Information") {
+//            TextField("Name", text: Binding(
+//                get: { member.name ?? "" },
+//                set: { member.name = $0 }
+//            ))
+//            .padding(10)
+//            .background(Color.white)
+//            .cornerRadius(10)
 //
+//            TextField("Age", text: Binding(
+//                get: { String(member.age) },
+//                set: { member.age = Int16($0) ?? 0 }
+//            ))
+//            .keyboardType(.numberPad)
+//            .padding(10)
+//            .background(Color.white)
+//            .cornerRadius(10)
+//
+//            TextField("Relationship", text: Binding(
+//                get: { member.relationship ?? "" },
+//                set: { member.relationship = $0 }
+//            ))
+//            .padding(10)
+//            .background(Color.white)
+//            .cornerRadius(10)
+//        }
+//    }
+//}
+//
+//struct ContactInfoSection: View {
+//    @ObservedObject var member: Member
+//    
+//    var body: some View {
+//        FormSectionCard(title: "Contact") {
+//            TextField("Phone", text: Binding(
+//                get: { member.phone ?? "" },
+//                set: { member.phone = $0 }
+//            ))
+//            .padding(10)
+//            .background(Color.white)
+//            .cornerRadius(10)
+//
+//            TextField("Address", text: Binding(
+//                get: { member.address ?? "" },
+//                set: { member.address = $0 }
+//            ))
+//            .padding(10)
+//            .background(Color.white)
+//            .cornerRadius(10)
+//        }
+//    }
+//}
+//
+//struct ProfessionalInfoSection: View {
+//    @ObservedObject var member: Member
+//    
+//    var body: some View {
+//        FormSectionCard(title: "Professional") {
+//            TextField("Occupation", text: Binding(
+//                get: { member.occupation ?? "" },
+//                set: { member.occupation = $0 }
+//            ))
+//            .padding(10)
+//            .background(Color.white)
+//            .cornerRadius(10)
+//        }
+//    }
+//}
+//
+//struct BirthdayInfoSection: View {
+//    @ObservedObject var member: Member
+//    
+//    var body: some View {
+//        FormSectionCard(title: "Birthday") {
+//            DatePicker(
+//                "Birthday",
+//                selection: Binding(
+//                    get: { member.birthday ?? Date() },
+//                    set: { member.birthday = $0 }
+//                ),
+//                displayedComponents: .date
+//            )
+//        }
+//    }
+//}
+
+
 
 import SwiftUI
 
 struct PersonalInfoSection: View {
     @ObservedObject var member: Member
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         FormSectionCard(title: "Personal Information") {
@@ -17,7 +112,8 @@ struct PersonalInfoSection: View {
                 set: { member.name = $0 }
             ))
             .padding(10)
-            .background(Color.white)
+            .foregroundColor(appState.isDarkMode ? .white : .primary)
+            .background(appState.isDarkMode ? Color(red: 0.28, green: 0.30, blue: 0.34) : Color.white)
             .cornerRadius(10)
 
             TextField("Age", text: Binding(
@@ -26,7 +122,8 @@ struct PersonalInfoSection: View {
             ))
             .keyboardType(.numberPad)
             .padding(10)
-            .background(Color.white)
+            .foregroundColor(appState.isDarkMode ? .white : .primary)
+            .background(appState.isDarkMode ? Color(red: 0.28, green: 0.30, blue: 0.34) : Color.white)
             .cornerRadius(10)
 
             TextField("Relationship", text: Binding(
@@ -34,7 +131,8 @@ struct PersonalInfoSection: View {
                 set: { member.relationship = $0 }
             ))
             .padding(10)
-            .background(Color.white)
+            .foregroundColor(appState.isDarkMode ? .white : .primary)
+            .background(appState.isDarkMode ? Color(red: 0.28, green: 0.30, blue: 0.34) : Color.white)
             .cornerRadius(10)
         }
     }
@@ -42,6 +140,7 @@ struct PersonalInfoSection: View {
 
 struct ContactInfoSection: View {
     @ObservedObject var member: Member
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         FormSectionCard(title: "Contact") {
@@ -50,7 +149,8 @@ struct ContactInfoSection: View {
                 set: { member.phone = $0 }
             ))
             .padding(10)
-            .background(Color.white)
+            .foregroundColor(appState.isDarkMode ? .white : .primary)
+            .background(appState.isDarkMode ? Color(red: 0.28, green: 0.30, blue: 0.34) : Color.white)
             .cornerRadius(10)
 
             TextField("Address", text: Binding(
@@ -58,7 +158,8 @@ struct ContactInfoSection: View {
                 set: { member.address = $0 }
             ))
             .padding(10)
-            .background(Color.white)
+            .foregroundColor(appState.isDarkMode ? .white : .primary)
+            .background(appState.isDarkMode ? Color(red: 0.28, green: 0.30, blue: 0.34) : Color.white)
             .cornerRadius(10)
         }
     }
@@ -66,6 +167,7 @@ struct ContactInfoSection: View {
 
 struct ProfessionalInfoSection: View {
     @ObservedObject var member: Member
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         FormSectionCard(title: "Professional") {
@@ -74,7 +176,8 @@ struct ProfessionalInfoSection: View {
                 set: { member.occupation = $0 }
             ))
             .padding(10)
-            .background(Color.white)
+            .foregroundColor(appState.isDarkMode ? .white : .primary)
+            .background(appState.isDarkMode ? Color(red: 0.28, green: 0.30, blue: 0.34) : Color.white)
             .cornerRadius(10)
         }
     }
@@ -82,6 +185,7 @@ struct ProfessionalInfoSection: View {
 
 struct BirthdayInfoSection: View {
     @ObservedObject var member: Member
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         FormSectionCard(title: "Birthday") {
@@ -93,6 +197,9 @@ struct BirthdayInfoSection: View {
                 ),
                 displayedComponents: .date
             )
+            .font(.system(size: 15, weight: .semibold))
+            .foregroundColor(appState.isDarkMode ? .white : .primary)
+            .padding(6)
         }
     }
 }

@@ -8,21 +8,33 @@
 import SwiftUI
 import CoreData
 
-enum RelationshipType: String, CaseIterable {
-    case mother
-    case father
-    case sister
-    case brother
-    case spouse
-    case husband
-    case wife
-    case son
-    case daughter
+enum RelationshipType: String, CaseIterable, Identifiable, Hashable{
+    case father = "Father"
+    case mother = "Mother"
+    case brother = "Brother"
+    case sister = "Sister"
+    case son = "Son"
+    case daughter = "Daughter"
+    case husband = "Husband"
+    case wife = "Wife"
+    case grandfather = "Grandfather"
+    case grandmother = "Grandmother"
+    case uncle = "Uncle"
+    case aunt = "Aunt"
+    case cousin = "Cousin"
+    case friend = "Friend"
+    case other = "Other"
+    
+    var id: String {self.rawValue}
+    var displayName: String {
+        return self.rawValue
+    }
     
     /// Checks if a given raw string matches any immediate family member cases
     static func isImmediate(_ relationship: String) -> Bool {
-        let cleanRelation = relationship.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        return RelationshipType(rawValue: cleanRelation) != nil
+        let cleanRelation = relationship.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let immediateCases = ["father","mother", "brother", "sister", "son", "daughter", "husband", "wife", "grandfather", "grandmother", "uncle", "aunt", "cousin", "friend", "other"]
+        return immediateCases.contains(cleanRelation)
     }
 }
 

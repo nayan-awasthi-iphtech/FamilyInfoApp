@@ -27,6 +27,10 @@ struct AddFamilyMember: View {
     
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImage: UIImage? = nil
+    
+    private var isValidForm:Bool {
+        FormValidationManager.checkValidity(name: name, occupation: occupation, phone: phone, ageInput: ageInput,address: address)
+    }
 
     var body: some View {
         Form {
@@ -47,6 +51,22 @@ struct AddFamilyMember: View {
                 occupation: $occupation
             )
 
+            .onChange(of: name) { _, newValue in
+                 name = FormValidationManager.sanitizeText(input: newValue, maxLength: 30)
+             }
+             .onChange(of: phone) { _, newValue in
+                 phone = FormValidationManager.sanitizeNumeric(input: newValue, maxLength: 10)
+             }
+             .onChange(of: ageInput) { _, newValue in
+                 ageInput = FormValidationManager.sanitizeNumeric(input: newValue, maxLength: 3)
+             }
+             .onChange(of: occupation) { _, newValue in
+                 occupation = FormValidationManager.sanitizeText(input: newValue, maxLength: 30)
+             }
+             .onChange(of: address) { _, newValue in
+                 address = FormValidationManager.sanitizeText(input: newValue, maxLength: 100)
+             }
+            
             // 3. Extracted Save Button Component with validation action closure
             Section {
                 SaveMemberButton {
@@ -71,12 +91,7 @@ struct AddFamilyMember: View {
 
     // Isolated Core Data saving action handler
     private func validateAndSaveMember() {
-        guard !name.isEmpty,
-              let age = Int16(ageInput),
-              age > 0,
-              !relationship.isEmpty,
-              !phone.isEmpty
-        else {
+        guard isValidForm else {
             isAlert = true
             return
         }
@@ -87,7 +102,7 @@ struct AddFamilyMember: View {
         newMember.id = UUID()
         
         newMember.name = name
-        newMember.age = age
+        newMember.age = Int16(ageInput) ?? 0
         newMember.relationship = relationship
         newMember.phone = phone
         newMember.address = address.isEmpty ? "None" : address

@@ -13,6 +13,14 @@
 		0B25D0C33001038B006C8D61 /* ProfileImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B25D0C23001038B006C8D61 /* ProfileImagePickerView.swift */; };
 		0B25D0C53001049F006C8D61 /* MemberInputFieldsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B25D0C43001049F006C8D61 /* MemberInputFieldsView.swift */; };
 		0B25D0C7300104D8006C8D61 /* SaveMemberButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B25D0C6300104D8006C8D61 /* SaveMemberButton.swift */; };
+		0B6162A63006187000B71157 /* CustomInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6162A53006186700B71157 /* CustomInputField.swift */; };
+		0B6162A830061A4D00B71157 /* CustomRelationshipDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6162A730061A4A00B71157 /* CustomRelationshipDropdown.swift */; };
+		0B6162AA30061AD800B71157 /* FormStylesAndShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6162A930061AD500B71157 /* FormStylesAndShared.swift */; };
+		0B6162AD3006202200B71157 /* FormValidationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6162AC3006200900B71157 /* FormValidationManager.swift */; };
+		0B6162B03006372D00B71157 /* RelationshipChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6162AF3006372200B71157 /* RelationshipChartView.swift */; };
+		0B6162B230064E9400B71157 /* DashboardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6162B130064E8D00B71157 /* DashboardHeaderView.swift */; };
+		0B6162B430064EC400B71157 /* DashboardQuickBreakdownSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6162B330064EC200B71157 /* DashboardQuickBreakdownSection.swift */; };
+		0B6162B630064F0000B71157 /* DashboardRecentActivitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6162B530064EF100B71157 /* DashboardRecentActivitySection.swift */; };
 		0B6503173004A7F60020062A /* FamilyDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6503163004A7F60020062A /* FamilyDashboardView.swift */; };
 		0B6503193004A87C0020062A /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6503183004A8740020062A /* MainTabView.swift */; };
 		0B65031B3004BC9C0020062A /* CountBirthdayThisMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B65031A3004BC850020062A /* CountBirthdayThisMonth.swift */; };
@@ -21,6 +29,7 @@
 		0B6503213004D1990020062A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6503203004D1990020062A /* NotificationManager.swift */; };
 		0B6503253004FFC40020062A /* ProfileInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6503243004FFB90020062A /* ProfileInfoSection.swift */; };
 		0B650327300500360020062A /* FormSectionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6503263005002D0020062A /* FormSectionCard.swift */; };
+		0B65032F30051D660020062A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B65032E30051D600020062A /* AppState.swift */; };
 		181B45E12FFD0A3D00EEE730 /* FamilyInformationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181B45E02FFD0A3D00EEE730 /* FamilyInformationApp.swift */; };
 		181B45E32FFD0A3D00EEE730 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181B45E22FFD0A3D00EEE730 /* ContentView.swift */; };
 		181B45E52FFD0A4100EEE730 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 181B45E42FFD0A4100EEE730 /* Assets.xcassets */; };
@@ -45,6 +54,14 @@
 		0B25D0C23001038B006C8D61 /* ProfileImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImagePickerView.swift; sourceTree = "<group>"; };
 		0B25D0C43001049F006C8D61 /* MemberInputFieldsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInputFieldsView.swift; sourceTree = "<group>"; };
 		0B25D0C6300104D8006C8D61 /* SaveMemberButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMemberButton.swift; sourceTree = "<group>"; };
+		0B6162A53006186700B71157 /* CustomInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputField.swift; sourceTree = "<group>"; };
+		0B6162A730061A4A00B71157 /* CustomRelationshipDropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRelationshipDropdown.swift; sourceTree = "<group>"; };
+		0B6162A930061AD500B71157 /* FormStylesAndShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStylesAndShared.swift; sourceTree = "<group>"; };
+		0B6162AC3006200900B71157 /* FormValidationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidationManager.swift; sourceTree = "<group>"; };
+		0B6162AF3006372200B71157 /* RelationshipChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipChartView.swift; sourceTree = "<group>"; };
+		0B6162B130064E8D00B71157 /* DashboardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHeaderView.swift; sourceTree = "<group>"; };
+		0B6162B330064EC200B71157 /* DashboardQuickBreakdownSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardQuickBreakdownSection.swift; sourceTree = "<group>"; };
+		0B6162B530064EF100B71157 /* DashboardRecentActivitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardRecentActivitySection.swift; sourceTree = "<group>"; };
 		0B6503163004A7F60020062A /* FamilyDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyDashboardView.swift; sourceTree = "<group>"; };
 		0B6503183004A8740020062A /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		0B65031A3004BC850020062A /* CountBirthdayThisMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountBirthdayThisMonth.swift; sourceTree = "<group>"; };
@@ -53,6 +70,7 @@
 		0B6503203004D1990020062A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		0B6503243004FFB90020062A /* ProfileInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoSection.swift; sourceTree = "<group>"; };
 		0B6503263005002D0020062A /* FormSectionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSectionCard.swift; sourceTree = "<group>"; };
+		0B65032E30051D600020062A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		181B45DD2FFD0A3D00EEE730 /* FamilyInformation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FamilyInformation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		181B45E02FFD0A3D00EEE730 /* FamilyInformationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyInformationApp.swift; sourceTree = "<group>"; };
 		181B45E22FFD0A3D00EEE730 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,15 +101,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B6162A4300602CB00B71157 /* TabView */ = {
+			isa = PBXGroup;
+			children = (
+				0B6503183004A8740020062A /* MainTabView.swift */,
+			);
+			path = TabView;
+			sourceTree = "<group>";
+		};
+		0B6162AB30061FFC00B71157 /* ValidationLayer */ = {
+			isa = PBXGroup;
+			children = (
+				0B6162AC3006200900B71157 /* FormValidationManager.swift */,
+			);
+			path = ValidationLayer;
+			sourceTree = "<group>";
+		};
+		0B6162AE3006370700B71157 /* RelationshipChart */ = {
+			isa = PBXGroup;
+			children = (
+				0B6162AF3006372200B71157 /* RelationshipChartView.swift */,
+			);
+			path = RelationshipChart;
+			sourceTree = "<group>";
+		};
 		0B6503283005031E0020062A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0B6162AE3006370700B71157 /* RelationshipChart */,
+				0B6162A4300602CB00B71157 /* TabView */,
 				0B65032D300504B30020062A /* FamilyDashboard */,
 				0B65032C3005047F0020062A /* HomePage */,
 				0B65032B300504160020062A /* EditMemberDetails */,
 				0B65032A300503B90020062A /* ShowFamilyMemberDetails */,
 				0B650329300503610020062A /* AddFamilyMember */,
-				0B6503183004A8740020062A /* MainTabView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -99,6 +142,9 @@
 		0B650329300503610020062A /* AddFamilyMember */ = {
 			isa = PBXGroup;
 			children = (
+				0B6162A930061AD500B71157 /* FormStylesAndShared.swift */,
+				0B6162A730061A4A00B71157 /* CustomRelationshipDropdown.swift */,
+				0B6162A53006186700B71157 /* CustomInputField.swift */,
 				18A3DF752FFD16E4004F5C70 /* AddFamilyMember.swift */,
 				0B25D0C43001049F006C8D61 /* MemberInputFieldsView.swift */,
 			);
@@ -136,6 +182,9 @@
 		0B65032D300504B30020062A /* FamilyDashboard */ = {
 			isa = PBXGroup;
 			children = (
+				0B6162B530064EF100B71157 /* DashboardRecentActivitySection.swift */,
+				0B6162B330064EC200B71157 /* DashboardQuickBreakdownSection.swift */,
+				0B6162B130064E8D00B71157 /* DashboardHeaderView.swift */,
 				0B6503163004A7F60020062A /* FamilyDashboardView.swift */,
 				0B65031C3004BE770020062A /* DashboardCardView.swift */,
 			);
@@ -161,6 +210,7 @@
 		181B45DF2FFD0A3D00EEE730 /* FamilyInformation */ = {
 			isa = PBXGroup;
 			children = (
+				0B6162AB30061FFC00B71157 /* ValidationLayer */,
 				0B6503283005031E0020062A /* View */,
 				187C8C892FFF6F4600327B87 /* Model */,
 				188203C62FFE2EDF00E84182 /* Components */,
@@ -184,6 +234,7 @@
 		187C8C892FFF6F4600327B87 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0B65032E30051D600020062A /* AppState.swift */,
 				187C8C8A2FFF6F6900327B87 /* PersistenceController.swift */,
 			);
 			path = Model;
@@ -279,20 +330,27 @@
 			files = (
 				0B25D0C33001038B006C8D61 /* ProfileImagePickerView.swift in Sources */,
 				0B65031B3004BC9C0020062A /* CountBirthdayThisMonth.swift in Sources */,
+				0B6162B630064F0000B71157 /* DashboardRecentActivitySection.swift in Sources */,
 				0B25D0BF30010264006C8D61 /* MemberHeaderCardView.swift in Sources */,
 				188203D82FFE59C800E84182 /* EditMemberView.swift in Sources */,
 				187C8C8B2FFF6F6900327B87 /* PersistenceController.swift in Sources */,
 				188203C82FFE2EF800E84182 /* SearchBar.swift in Sources */,
 				18894B032FFE1103009F7909 /* ShowFamilyDetails.swift in Sources */,
 				188203CF2FFE312B00E84182 /* MemberHelper.swift in Sources */,
+				0B6162AA30061AD800B71157 /* FormStylesAndShared.swift in Sources */,
 				181B45E32FFD0A3D00EEE730 /* ContentView.swift in Sources */,
+				0B6162B430064EC400B71157 /* DashboardQuickBreakdownSection.swift in Sources */,
 				0B650327300500360020062A /* FormSectionCard.swift in Sources */,
 				0B25D0BD3000FA40006C8D61 /* HeaderView.swift in Sources */,
 				187C8C872FFF6B5E00327B87 /* FamilyModel.xcdatamodeld in Sources */,
 				181B45E12FFD0A3D00EEE730 /* FamilyInformationApp.swift in Sources */,
 				0B6503193004A87C0020062A /* MainTabView.swift in Sources */,
 				0B6503253004FFC40020062A /* ProfileInfoSection.swift in Sources */,
+				0B6162AD3006202200B71157 /* FormValidationManager.swift in Sources */,
 				18894B062FFE189C009F7909 /* MemberInfoCard.swift in Sources */,
+				0B6162A830061A4D00B71157 /* CustomRelationshipDropdown.swift in Sources */,
+				0B6162B03006372D00B71157 /* RelationshipChartView.swift in Sources */,
+				0B6162B230064E9400B71157 /* DashboardHeaderView.swift in Sources */,
 				188203D52FFE35AA00E84182 /* MemberListView.swift in Sources */,
 				188203CC2FFE303B00E84182 /* BirthdayCardView.swift in Sources */,
 				0B25D0C53001049F006C8D61 /* MemberInputFieldsView.swift in Sources */,
@@ -300,7 +358,9 @@
 				0B25D0C7300104D8006C8D61 /* SaveMemberButton.swift in Sources */,
 				0B6503173004A7F60020062A /* FamilyDashboardView.swift in Sources */,
 				0B25D0C1300102A9006C8D61 /* MemberInfoListView.swift in Sources */,
+				0B65032F30051D660020062A /* AppState.swift in Sources */,
 				0B65031F3004BEEC0020062A /* CategoryCard.swift in Sources */,
+				0B6162A63006187000B71157 /* CustomInputField.swift in Sources */,
 				0B6503213004D1990020062A /* NotificationManager.swift in Sources */,
 				0B65031D3004BE780020062A /* DashboardCardView.swift in Sources */,
 				188203D22FFE33C400E84182 /* MemberRowView.swift in Sources */,
