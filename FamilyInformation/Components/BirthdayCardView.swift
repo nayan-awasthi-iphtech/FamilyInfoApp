@@ -159,78 +159,57 @@ struct BirthdayCardView: View {
             VStack(alignment: .leading, spacing: 14) {
                 HStack(spacing: 6) {
                     Image(systemName: "birthday.cake.fill")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.system(size: 16))
                     Text("Birthdays Today!")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(.system(size: 16, weight: .bold))
                 }
                 .foregroundColor(.white)
                 
                 HStack(spacing: 16) {
                     ForEach(birthdayMembers.prefix(3)) { member in
-                        VStack(spacing: 6) {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.white.opacity(0.25))
-                                    .frame(width: 50, height: 50)
-                                
-                                if let imageData = member.image, let uiImage = UIImage(data: imageData) {
-                                    Image(uiImage: uiImage)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 50, height: 50)
-                                        .clipShape(Circle())
-                                } else {
-                                    Text(String(member.name?.prefix(2) ?? "??").uppercased())
-                                        .font(.system(size: 14, weight: .bold, design: .rounded))
-                                        .foregroundColor(.white)
-                                }
-                            }
-                            
-                            Text(member.name ?? "Unknown")
-                                .font(.system(size: 12, weight: .semibold))
-                                .foregroundColor(.white)
-                                .lineLimit(1)
-                        }
+                        // FIX: Passing into ObservedObject subview to trigger instant image updates! 🔄
+                        BirthdayAvatarView(member: member)
                     }
                 }
                 
                 let namesText = birthdayMembers.map { "\($0.name ?? "Someone") turns \($0.age) today 🎂" }.joined(separator: " • ")
                 Text(namesText)
-                    .font(.system(size: 12, weight: .medium))
+                    .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.white.opacity(0.9))
-                    .padding(.top, 2)
-                    .lineLimit(2)
+                    .padding(.top, 4)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(18)
             .background(
                 LinearGradient(
+                    // Dark mode mein subtle neon spectrum aur light mode mein standard vibrant pink-orange
                     colors: appState.isDarkMode ? [
-                        Color.pink.opacity(0.85),
-                        Color.purple.opacity(0.85)
+                        Color.pink.opacity(0.7),
+                        Color.purple.opacity(0.7)
                     ] : [
-                        Color.pink.opacity(0.9),
+                        Color.pink.opacity(0.85),
                         Color.orange.opacity(0.85)
                     ],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
             )
-            .cornerRadius(16) // Synchronised corner radius parameter
+            .cornerRadius(20)
             .shadow(
-                color: appState.isDarkMode ? Color.pink.opacity(0.25) : Color.orange.opacity(0.15),
+                color: appState.isDarkMode ? Color.pink.opacity(0.3) : Color.orange.opacity(0.2),
                 radius: 8,
                 x: 0,
                 y: 4
             )
-            .padding(.horizontal, 16) // Fix: Perfectly aligned horizontally with SearchBar and Member lists
+            .padding(.horizontal, 20)
             
         } else {
             // Clean, elegant placeholder card matching the light/dark UI themes when empty
             HStack(spacing: 14) {
                 ZStack {
                     Circle()
-                        .fill(appState.isDarkMode ? Color.cyan.opacity(0.15) : Color("BrandBlue").opacity(0.08))
+                        // Icon circle shifts beautifully to darker neon blue in dark mode
+                        .fill(appState.isDarkMode ? Color.blue.opacity(0.25) : Color.blue.opacity(0.08))
                         .frame(width: 44, height: 44)
                     
                     Image(systemName: "gift")
@@ -238,41 +217,65 @@ struct BirthdayCardView: View {
                         .foregroundColor(appState.isDarkMode ? .cyan : Color("BrandBlue").opacity(0.8))
                 }
                 
-                VStack(alignment: .leading, spacing: 3) {
+                VStack(alignment: .leading, spacing: 2) {
                     Text("No Birthdays Today")
-                        .font(.system(size: 14, weight: .bold))
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(appState.isDarkMode ? .white : .primary)
                     
                     Text("Your next family celebration will show up here.")
                         .font(.system(size: 12))
-                        .foregroundColor(appState.isDarkMode ? .white.opacity(0.5) : .secondary)
+                        .foregroundColor(appState.isDarkMode ? .white.opacity(0.8) : .secondary)
                 }
                 
                 Spacer()
             }
             .padding(.vertical, 14)
             .padding(.horizontal, 16)
-            // Fix: Changed plate color to matching premium slate layer matrix (0.22)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(appState.isDarkMode ? Color(red: 0.22, green: 0.24, blue: 0.28).opacity(0.7) : Color.white)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(appState.isDarkMode ? Color.white.opacity(0.05) : Color.black.opacity(0.03), lineWidth: 1)
-            )
-            .shadow(
-                color: Color.black.opacity(appState.isDarkMode ? 0.15 : 0.03),
-                radius: 6,
-                x: 0,
-                y: 3
-            )
-            .padding(.horizontal, 16) // Fix: Standardized layout matrix edge tracking
+            // Fix: Elevates the empty card background color dynamically
+            .background(appState.isDarkMode ? Color(red: 0.25, green: 0.26, blue: 0.29) : Color.white)
+            .cornerRadius(16)
+            .shadow(color: Color.white.opacity(appState.isDarkMode ? 0.2 : 0.02), radius: 6, x: 1, y: 3)
+            .padding(.horizontal, 20)
+        }
+    }
+}
+
+// MARK: - Extracted Subview (Keeps original avatar UI, fixes image update logic)
+struct BirthdayAvatarView: View {
+    @ObservedObject var member: Member // Crucial link: forces the avatar layout to reload on database saves!
+    
+    var body: some View {
+        VStack(spacing: 6) {
+            ZStack {
+                Circle()
+                    .fill(Color.white.opacity(0.3))
+                    .frame(width: 50, height: 50)
+                
+                if let imageData = member.image, let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                } else {
+                    Text(String(member.name?.prefix(2) ?? "??").uppercased())
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white)
+                }
+            }
+            
+            Text(member.name ?? "Unknown")
+                .font(.system(size: 12, weight: .medium))
+                .foregroundColor(.white)
         }
     }
 }
 
 #Preview {
-    BirthdayCardView(birthdayMembers: [])
-        .environmentObject(AppState.shared)
+    let context = PersistenceController.shared.container.viewContext
+    return VStack(spacing: 20) {
+        BirthdayCardView(birthdayMembers: []) // Empty state check
+            .environmentObject(AppState.shared)
+    }
+    .background(Color(.systemGroupedBackground))
 }

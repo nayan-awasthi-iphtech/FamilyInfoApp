@@ -41,7 +41,9 @@ struct EditMemberView: View {
                 
                 ScrollView {
                     VStack(spacing: 14) {
-                        // Profile image placeholder component picker layout
+                        
+                        ProfileImagePickerView(selectedItem: $selectedItem, selectedImage: $selectedImage)
+                        
                         PersonalInfoSection(member: member)
                             .onChange(of: member.name ?? "") { _, newValue in
                                 member.name = FormValidationManager.sanitizeText(input: newValue, maxLength: 30)
@@ -99,4 +101,3 @@ struct EditMemberView: View {
         }
     }
 }
-

@@ -40,10 +40,10 @@ struct DashboardRecentActivitySection: View {
                                 .fontWeight(.medium)
                             
                             Spacer()
-                            
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                            if member.isFavorite {
+                                Image(systemName: "star.fill")
+                                    .foregroundStyle(.orange)
+                            }
                         }
                         .padding()
                         
